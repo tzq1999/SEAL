@@ -1,1 +1,0 @@
-python3 main.py --data_path "/home/zqtan/text8"  --saveloss_path "/home/zqtan/trainloss.log"      --savemodel_path  "/home/zqtan" &
