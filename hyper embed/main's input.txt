@@ -1,1 +1,0 @@
-python3 "/home/zqtan/hyper embed/train.py" --data_path "/home/zqtan/hyper embed/mammal_closure.csv"  --saveloss_path "/home/zqtan/hyper embed/trainloss.log"      --savemodel_path  "/home/zqtan/hyper embed" &
