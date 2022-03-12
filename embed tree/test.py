@@ -13,8 +13,8 @@ def test_step(model, embedding, test_triples, all_true_triples, degree):
         
     model.eval()
     
-    device=embedding.device    
-    nentity=embedding.shape[0]
+    device = embedding.device    
+    nentity = embedding.shape[0]
         
             #Otherwise use standard (filtered) MRR, MR, HITS@1, HITS@3, and HITS@10 metrics
             #Prepare dataloader for evaluation
@@ -189,7 +189,7 @@ def TreeWE(sample, mode, embedding, degree):
         a[...,int((i-1)/degree)] += a[...,i]
         b[...,int((i-1)/degree)] += b[...,i]
         
-    score=-torch.norm(a-b, p=1, dim=2)
+    score = -torch.norm(a-b, p=1, dim=2)
     #print(score.shape)    
     return score
 
@@ -277,11 +277,11 @@ def main():
     test_triples = read_triple(args.testdata_path, totalitem2id)
     all_triples = read_triple(args.totaldata_path, totalitem2id)
     
-    model= TreeWmodel(args.model_name,len(totalitems), device)
+    model = TreeWmodel(args.model_name,len(totalitems), device)
     model.load_state_dict(torch.load(args.model_para_path))
     model.to(device)
     
-    embedding= model.embedding.weight.data  #get embedding array from model 
+    embedding = model.embedding.weight.data  #get embedding array from model 
     
     logger.info(test_step(model, embedding, test_triples, all_triples, args.degree))
     logger.info('Finished Testing')

@@ -8,9 +8,9 @@ class Tree_ops(torch.autograd.Function):
     @staticmethod
     def forward(ctx, matrix, embeddim, d):
         
-        matrix_= matrix.clone()
+        matrix_ = matrix.clone()
         ctx.dim = embeddim
-        ctx.degree= d
+        ctx.degree = d
         for i in range(embeddim-1, 0, -1):
             matrix_[...,int((i-1)/d)] += matrix_[...,i]
         
@@ -18,8 +18,8 @@ class Tree_ops(torch.autograd.Function):
 
     @staticmethod
     def backward(ctx, grad_out):
-        embeddim= ctx.dim
-        d= ctx.degree
+        embeddim = ctx.dim
+        d = ctx.degree
         grad_out_ = grad_out.clone()
         for i in range(0, int((embeddim-1)/d)):
             for j in range(1, d+1):
@@ -45,11 +45,11 @@ class TreeWmodel(torch.nn.Module):
         
         self.eps = eps #we define the boundary to be 1-eps
         
-        self.degree= d
+        self.degree = d
         
-        self.num_embeddings= num_embeddings
+        self.num_embeddings = num_embeddings
         
-        self.embedding_dim= embedding_dim
+        self.embedding_dim = embedding_dim
         
         if self.model_name== "HyperE":
             self.embedding = torch.nn.Embedding(self.num_embeddings, 
@@ -63,7 +63,7 @@ class TreeWmodel(torch.nn.Module):
             distibution = torch.distributions.Uniform(-1,1)
         
             x = distibution.sample(self.embedding.weight.data.shape)
-            x=x.to(device)
+            x = x.to(device)
         
             self.embedding.weight.data = initial_radius*x/torch.norm(x,p=2,dim=-1).unsqueeze(-1)            
             
@@ -77,7 +77,7 @@ class TreeWmodel(torch.nn.Module):
             distibution = torch.distributions.Uniform(-1,1)
         
             x = distibution.sample(self.embedding.weight.data.shape)
-            x=x.to(device)
+            x = x.to(device)
         
             self.embedding.weight.data = initial_radius*x/torch.norm(x,p=2,dim=-1).unsqueeze(-1)
              
@@ -119,10 +119,10 @@ class TreeWmodel(torch.nn.Module):
     def TreeWE(self, x, y):
         
         x_embprob = torch.nn.functional.softmax(self.embedding(x),dim=2)
-        x_embsubtreeprob=Tree_ops.apply(x_embprob,self.embedding_dim,self.degree)
+        x_embsubtreeprob = Tree_ops.apply(x_embprob,self.embedding_dim,self.degree)
         #print("x_emb",x_emb.shape)
         y_embprob = torch.nn.functional.softmax(self.embedding(y),dim=2)
-        y_embsubtreeprob=Tree_ops.apply(y_embprob,self.embedding_dim,self.degree)
+        y_embsubtreeprob = Tree_ops.apply(y_embprob,self.embedding_dim,self.degree)
 
         score = -torch.norm(x_embsubtreeprob - y_embsubtreeprob ,p=1,dim=2 )
         return score
@@ -138,9 +138,9 @@ class RiemannianSGD(torch.optim.Optimizer):
     """
 
     def __init__(self, params, lr):
-        defaults={}
+        defaults = {}
         super(RiemannianSGD, self).__init__(params,defaults)
-        self.lr= lr
+        self.lr = lr
 
     def poincare_grad(self, p, d_p):
         """
