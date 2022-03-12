@@ -43,7 +43,7 @@ class trainDataset(Dataset):
             #'mammal.n.01',
             #'whale.n.02'],
     
-        for a,b in self.raw_data:
+        for a, b in self.raw_data:
             if b not in self.positive_samples_lookup[a]:    #if b not added before
                 self.positive_samples_lookup[a].append(b)
         
@@ -75,8 +75,8 @@ class trainDataset(Dataset):
         return self.N
 
     def __getitem__(self, idx):  #input is index
-        #we return list ([positive_sample,negative_sample_0,...],[reference_samples]] 
-        return [self.vectors[idx][1:],self.vectors[idx][0]*np.ones(1+self.neg_samples,dtype=np.int64)]
+        #we return list ([positive_sample,negative_sample_0,...], [reference_samples]] 
+        return [self.vectors[idx][1:], self.vectors[idx][0]*np.ones(1+self.neg_samples, dtype=np.int64)]
 
 
 
