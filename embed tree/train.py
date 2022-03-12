@@ -39,29 +39,29 @@ def main():
     A, B = zip(*raw_data) #get As and Bs from raw data , first and second column
         
     totalitems = tuple(set(A + B)) #individual items from dataset    
-    totalnum=len(totalitems)        
+    totalnum = len(totalitems)        
     totalitem2id = {item:i for i,item in enumerate(totalitems)} #item2id lookup table(dictionary), order is the order of csv's row
         
     #test = WordNetDataset(filename=args.testdata_path,neg_samples=args.neg_samples)
     train = trainDataset(args.traindata_path,args.neg_samples,totalitem2id)
     dataloader = torch.utils.data.DataLoader(train,batch_size=args.batch_size,shuffle=True)    
     
-    #logger.info("total train entries:",train.N)
-    #logger.info('total unique items in train',len(train.items))
-    #logger.info('negative samples per one positive',train.neg_samples,)
+    #logger.info("total train entries:", train.N)
+    #logger.info('total unique items in train', len(train.items))
+    #logger.info('negative samples per one positive', train.neg_samples,)
 
     #torch.save(data,args.savemodel_path+"/data.pkl")
     logger.info('Training...')
     
     device = args.gpu
     
-    model = TreeWmodel(args.model_name,totalnum,device)
+    model = TreeWmodel(args.model_name, totalnum, device)
     #model.to(device)
     #model.initialize_embedding()
     model.train()
     
     if args.model_name=="HyperE":
-        optimizer=RiemannianSGD(model.parameters(), lr=args.lr)        
+        optimizer = RiemannianSGD(model.parameters(), lr=args.lr)        
     else:
         optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     
