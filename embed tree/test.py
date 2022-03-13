@@ -1,3 +1,4 @@
+   
 import logging
 import argparse
 import os
@@ -144,8 +145,8 @@ def HyperE(sample, mode, embedding):
     
     
 def TreeWE(sample, mode, embedding, weight, degree):
-    gamma = torch.tensor(2)
-    gamma = gamma.to(embedding.device)
+    #gamma = torch.tensor(2)
+    #gamma = gamma.to(embedding.device)
     if mode == 'head-batch':
         tail_part, head_part = sample
         batch_size, negative_sample_size = head_part.size(0), head_part.size(1)
@@ -186,6 +187,10 @@ def TreeWE(sample, mode, embedding, weight, degree):
     b=torch.nn.functional.softmax(tail, dim=2)
     embeddim=embedding.shape[1]
     
+    for i in range(embeddim-1,0,-1):
+        a[...,int((i-1)/degree)] += a[...,i]
+        b[...,int((i-1)/degree)] += b[...,i]  
+        
     score = -torch.norm((a-b)*weight, p=1, dim=2)
     #print(score.shape)    
     return score
@@ -288,5 +293,4 @@ def main():
         
 if __name__ == '__main__':
     main()
-    
     
