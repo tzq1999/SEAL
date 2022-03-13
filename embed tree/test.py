@@ -9,7 +9,7 @@ from datasets import TestDataset
 from treeW import Tree_ops, TreeWmodel, RiemannianSGD, get_logger   
     
     
-def test_step(model, embedding, test_triples, all_true_triples, degree):
+def test_step(model, embedding, weight, test_triples, all_true_triples, degree):
         
     model.eval()
     
@@ -60,9 +60,9 @@ def test_step(model, embedding, test_triples, all_true_triples, degree):
                                 }
                 
                 if model.model_name =="TreeWE":
-                    score = model_func[model.model_name]((positive_sample, negative_sample), mode,embedding,degree)
+                    score = model_func[model.model_name]((positive_sample, negative_sample), mode, embedding, weight, degree)
                 else:
-                    score = model_func[model.model_name]((positive_sample, negative_sample), mode,embedding)               
+                    score = model_func[model.model_name]((positive_sample, negative_sample), mode, embedding)               
                 #score = treedis((positive_sample, negative_sample), mode,embedding,degree)
                 score += filter_bias
                         #Explicitly sort all the entities to ensure that there is no test exposure bias
@@ -143,8 +143,9 @@ def HyperE(sample, mode, embedding):
  
     
     
-def TreeWE(sample, mode, embedding, degree):
-
+def TreeWE(sample, mode, embedding, weight, degree):
+    gamma = torch.tensor(2)
+    gamma = gamma.to(embedding.device)
     if mode == 'head-batch':
         tail_part, head_part = sample
         batch_size, negative_sample_size = head_part.size(0), head_part.size(1)
@@ -184,12 +185,8 @@ def TreeWE(sample, mode, embedding, degree):
     a=torch.nn.functional.softmax(head, dim=2)
     b=torch.nn.functional.softmax(tail, dim=2)
     embeddim=embedding.shape[1]
-               
-    for i in range(embeddim-1, 0, -1):
-        a[...,int((i-1)/degree)] += a[...,i]
-        b[...,int((i-1)/degree)] += b[...,i]
-        
-    score = -torch.norm(a-b, p=1, dim=2)
+    
+    score = -torch.norm((a-b)*weight, p=1, dim=2)
     #print(score.shape)    
     return score
 
@@ -283,7 +280,9 @@ def main():
     
     embedding = model.embedding.weight.data  #get embedding array from model 
     
-    logger.info(test_step(model, embedding, test_triples, all_triples, args.degree))
+    weight = model.weight
+    
+    logger.info(test_step(model, embedding, weight, test_triples, all_triples, args.degree))
     logger.info('Finished Testing')
             
         

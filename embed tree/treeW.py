@@ -32,7 +32,7 @@ class Tree_ops(torch.autograd.Function):
 
 class TreeWmodel(torch.nn.Module):
     
-    def __init__(self, model_name, num_embeddings, device, eps=1e-5, initial_radius=0.001, embedding_dim=50, d=2):
+    def __init__(self, model_name, num_embeddings, device, eps=1e-5, initial_radius=0.001, embedding_dim=10, d=2):
         """
         Model class, which stores the embedding, passes inputs to PoincareDistance function
         
@@ -42,7 +42,7 @@ class TreeWmodel(torch.nn.Module):
         super(TreeWmodel, self).__init__()
         
         self.model_name= model_name
-        
+        self.device = device
         self.eps = eps #we define the boundary to be 1-eps
         
         self.degree = d
@@ -50,6 +50,10 @@ class TreeWmodel(torch.nn.Module):
         self.num_embeddings = num_embeddings
         
         self.embedding_dim = embedding_dim
+        
+        #self.gamma = gamma
+        
+        self.weight = torch.ones(embedding_dim).to(device)
         
         if self.model_name== "HyperE":
             self.embedding = torch.nn.Embedding(self.num_embeddings, 
@@ -123,8 +127,8 @@ class TreeWmodel(torch.nn.Module):
         #print("x_emb",x_emb.shape)
         y_embprob = torch.nn.functional.softmax(self.embedding(y),dim=2)
         y_embsubtreeprob = Tree_ops.apply(y_embprob,self.embedding_dim,self.degree)
-
-        score = -torch.norm(x_embsubtreeprob - y_embsubtreeprob ,p=1,dim=2 )
+        
+        score = -torch.norm((x_embsubtreeprob - y_embsubtreeprob)*self.weight ,p=1,dim=2 )
         return score
          
 class RiemannianSGD(torch.optim.Optimizer):
