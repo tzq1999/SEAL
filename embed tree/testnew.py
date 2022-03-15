@@ -67,7 +67,7 @@ def HyperE(embedding, x):
     c = embedding -embedding[x]
     d = torch.norm(c,dim=1)
 
-    return torch.arccosh(1+2*d**2/((1-a)*(1-b**2))).numpy()
+    return torch.arccosh(1+2*d**2/((1-a)*(1-b**2))).cpu().numpy()
 
 def read_triple(file_path, entity2id):
     '''
