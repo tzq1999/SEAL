@@ -42,17 +42,17 @@ def Linkpre_eval(model, embedding, weight, test_triple, positive_lookup, degree=
         
 def TreeWE(embedding, weight, degree, x):
                 
-    a=torch.nn.functional.softmax(embedding[x])
+    a = torch.nn.functional.softmax(embedding[x])
     embeddim = embedding.shape[1]           
     for i in range(embeddim-1,0,-1):
         a[...,int((i-1)/degree)] += a[...,i]
             
             
-    b=torch.nn.functional.softmax(embedding,dim=1)
+    b = torch.nn.functional.softmax(embedding,dim=1)
     for i in range(embeddim-1,0,-1):
         b[...,int((i-1)/degree)] += b[...,i]
         
-    c=torch.norm((a-b)*weight,p=1,dim=1)
+    c = torch.norm((a-b)*weight, p=1, dim=1)
         
         
     return c.cpu().numpy()     
@@ -60,12 +60,12 @@ def TreeWE(embedding, weight, degree, x):
 
 def HyperE(embedding, x):
     device = embedding.device
-    a=[torch.norm(embedding[x])**2]*embedding.shape[0]
-    a=torch.Tensor(a).to(device)
+    a = [torch.norm(embedding[x])**2]*embedding.shape[0]
+    a = torch.Tensor(a).to(device)
         
-    b=torch.norm(embedding,dim=1)
-    c=embedding -embedding[x]
-    d=torch.norm(c,dim=1)
+    b = torch.norm(embedding, dim=1)
+    c = embedding -embedding[x]
+    d = torch.norm(c,dim=1)
 
     return torch.arccosh(1+2*d**2/((1-a)*(1-b**2))).numpy()
 
@@ -118,7 +118,7 @@ def main():
     test_triples = read_triple(args.testdata_path, totalitem2id)
     #all_triples = read_triple(args.totaldata_path, totalitem2id)
     
-    model = TreeWmodel(args.model_name,len(totalitems), device)
+    model = TreeWmodel(args.model_name, len(totalitems), device)
     model.load_state_dict(torch.load(args.model_para_path))
     model.to(device)
     
