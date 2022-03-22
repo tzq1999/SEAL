@@ -11,6 +11,19 @@ from datasets import trainDataset
 from treeW import Tree_ops, TreeWmodel, RiemannianSGD, get_logger
 
 
+def mkdir(path):
+ 
+    folder = os.path.exists(path)
+ 
+    if not folder:                   #判断是否存在文件夹如果不存在则创建为文件夹
+        os.makedirs(path)            #makedirs 创建文件时如果路径不存在会创建这个路径
+        print ("---  new folder...  ---")
+        print ("---  OK  ---")
+ 
+    else:
+        print ("---  There is this folder!  ---")
+
+
 def main():
     os.environ["CUDA_VISIBLE_DEVICES"] = '2,3,4'
     parser = argparse.ArgumentParser(description="training model")
@@ -28,9 +41,10 @@ def main():
         
     args = parser.parse_args()
  
-    writer = SummaryWriter(args.savemodel_path+"/experiment")
-    logger = get_logger(args.saveloss_path)    
+    
+    logger = get_logger(args.saveloss_path+"/"+str(args.lr)+"_"+str(args.batch_size)+"_"+str(args.neg_samples)+".log")    
     logger.info(args.model_name)
+    logger.info('total epoch:[{}]\t lr:[{}]\t batch size:[{}]\t negative sample size={:} '.format(args.epoch , args.lr , args.batch_size , args.neg_samples ))
     logger.info("Construction dataset...")
         
     with open(args.data_path,'r') as f: # every row as a pair
@@ -59,14 +73,20 @@ def main():
     #model.to(device)
     #model.initialize_embedding()
     model.train()
-    
+    logger.info("embedding dim ={:} ".format(model.embedding.weight.shape[1]))
+    writer = SummaryWriter(args.savemodel_path+"/experiment"+"/"+str(args.lr)+"_"+str(args.batch_size)+"_"+str(args.neg_samples)+"_"+str(model.embedding.weight.shape[1]))
+
     if args.model_name=="HyperE":
         optimizer=RiemannianSGD(model.parameters(), lr=args.lr)        
     else:
         optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0)
     
     logger.info('start training!')
-      
+    
+    folder = args.savemodel_path+ "/" + "model_para" + "/"+str(args.lr)+"_"+str(args.batch_size)+"_"+str(args.neg_samples) + "_" + "dim" + str(model.embedding.weight.shape[1])
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+        
     for epo in range(args.epoch):
 
         running_loss = 0.0
@@ -95,7 +115,7 @@ def main():
                 running_loss = 0.0
         
         if epo%100==0:               
-            torch.save(model.state_dict(), (args.savemodel_path + "/epoch_{}").format(epo))
+            torch.save(model.state_dict(), (args.savemodel_path+"/model_para"+"/"+str(args.lr)+"_"+str(args.batch_size)+"_"+str(args.neg_samples) + "_" + "dim{}" + "/" + "epoch_{}").format(model.embedding.weight.shape[1], epo))
 
     logger.info('Finished Training')
             
