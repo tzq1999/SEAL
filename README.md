@@ -30,7 +30,7 @@ Coming Soon
 Please see `STL-10/environment.yml`.
 
 ### Train H-VLL + Fixmatch
-Train the model by 40 labeled data of CIFAR10 dataset:
+Train the model by 40 labeled data of STL-10 dataset:
 
 ```
 cd STL-10
@@ -39,7 +39,7 @@ python fixmatch.py --c config/fixmatch/fixmatch_stl10_250_0.yaml
 ```
 
 ### Train H-VLL + Flexmatch
-Train the model by 40 labeled data of CIFAR10 dataset:
+Train the model by 40 labeled data of STL-10 dataset:
 
 ```
 cd STL-10
