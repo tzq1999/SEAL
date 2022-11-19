@@ -1,5 +1,5 @@
 # General Description
-- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)". We provide the code for CIFAR10 and STL-10. Other settings are coming soon.
+- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)". We provide the code for CIFAR10, CIFAR100 and STL-10. Other settings are coming soon.
 
 
 ## Experiments on CIFAR10 Dataset
@@ -23,7 +23,27 @@ python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-siz
 
 ## Experiments on STL-10 Dataset
 
-Coming Soon
+### Requirements
+
+Please see `CIFAR100/environment.yml`.
+
+### Train H-VLL + Fixmatch
+Train the model by 400 labeled data of CIFAR100 dataset:
+
+```
+cd CIFAR100
+python fixmatch.py --c config/fixmatch/fixmatch_cifar100_400_0.yaml
+python fixmatch.py --c config/fixmatch/fixmatch_cifar100_2500_0.yaml
+```
+
+### Train H-VLL + Flexmatch
+Train the model by 400 labeled data of CIFAR100 dataset:
+
+```
+cd CIFAR100
+python flexmatch.py --c config/flexmatch/flexmatch_cifar100_400_0.yaml
+python flexmatch.py --c config/flexmatch/flexmatch_cifar100_2500_0.yaml
+```
 
 ### Requirements
 
