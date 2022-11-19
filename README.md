@@ -21,7 +21,7 @@ cd CIFAR10
 python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-size 64 --lr 0.03 --expand-labels --seed 0 --out results/cifar10@40.0
 ```
 
-## Experiments on STL-10 Dataset
+## Experiments on CIFAR100 Dataset
 
 ### Requirements
 
@@ -44,6 +44,8 @@ cd CIFAR100
 python flexmatch.py --c config/flexmatch/flexmatch_cifar100_400_0.yaml
 python flexmatch.py --c config/flexmatch/flexmatch_cifar100_2500_0.yaml
 ```
+
+## Experiments on STL-10 Dataset
 
 ### Requirements
 
