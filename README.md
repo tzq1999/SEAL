@@ -1,5 +1,5 @@
 # General Description
-- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)". We only release the results for DebiasPL on CIFAR10. Other settings are coming soon.
+- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)". We only release the results for DebiasPL on CIFAR10 and. Other settings are coming soon.
 
 
 ## Experiments on CIFAR10 Dataset
@@ -26,13 +26,13 @@ python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-siz
 
 ### Requirements
 
-Please see `environment.yml`.
+Please see `CIFAR100/environment.yml`.
 
 ## Experiments on STL-10 Dataset
 
 ### Requirements
 
-Please see `environment.yml`.
+Please see `STL-10/environment.yml`.
 
 
 ## References
