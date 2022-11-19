@@ -1,1 +1,0 @@
-python3 "/home/zqtan/treeW test/train.py" --data_path "/home/zqtan/treeW test/mammal_closure.tsv"  --saveloss_path "/home/zqtan/treeW test/trainloss"      --savemodel_path  "/home/zqtan/treeW test" --testdata_path "/home/zqtan/treeW test/mammal_closure_part2.tsv" --traindata_path "/home/zqtan/treeW test/mammal_closure_part1.tsv" --model_name "TreeWE" &
