@@ -1,5 +1,5 @@
 # General Description
-- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)".
+- This is a PyTorch implementation of the paper "Discovering Posterior Label Hierarchy: Relaxed Tree-Wasserterin Distance meets Semi-supervised Learning (H-VLL)". We provide the code for CIFAR10 and STL-10. Other settings are coming soon.
 
 
 ## Experiments on CIFAR10 Dataset
