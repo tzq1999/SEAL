@@ -24,6 +24,8 @@ python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-siz
 
 ## Experiments on CIFAR100 Dataset
 
+Coming Soon
+
 ### Requirements
 
 Please see `CIFAR100/environment.yml`.
