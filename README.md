@@ -6,7 +6,7 @@
 ## Usage
 
 ### Train
-Train the model by 4000 labeled data of CIFAR-10 dataset:
+Train the model by 40 labeled data of CIFAR-10 dataset:
 
 ```
 python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-size 64 --lr 0.03 --expand-labels --seed 0 --out results/cifar10@40.0
