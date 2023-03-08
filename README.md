@@ -13,7 +13,7 @@
 - tqdm
 - apex (optional)
 
-### Train XMatch + DebiasPL
+### Train SEAL + DebiasPL
 Train the model by 40 labeled data of CIFAR10 dataset:
 
 ```
@@ -27,7 +27,7 @@ python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-siz
 
 Please see `CIFAR100/environment.yml`.
 
-### Train XMatch + Fixmatch
+### Train SEAL + Fixmatch
 Train the model by 400 labeled data of CIFAR100 dataset:
 
 ```
@@ -36,7 +36,7 @@ python fixmatch.py --c config/fixmatch/fixmatch_cifar100_400_0.yaml
 python fixmatch.py --c config/fixmatch/fixmatch_cifar100_2500_0.yaml
 ```
 
-### Train XMatch + Flexmatch
+### Train SEAL + Flexmatch
 Train the model by 400 labeled data of CIFAR100 dataset:
 
 ```
@@ -51,7 +51,7 @@ python flexmatch.py --c config/flexmatch/flexmatch_cifar100_2500_0.yaml
 
 Please see `STL-10/environment.yml`.
 
-### Train XMatch + Fixmatch
+### Train SEAL + Fixmatch
 Train the model by 40 labeled data of STL-10 dataset:
 
 ```
@@ -60,7 +60,7 @@ python fixmatch.py --c config/fixmatch/fixmatch_stl10_40_0.yaml
 python fixmatch.py --c config/fixmatch/fixmatch_stl10_250_0.yaml
 ```
 
-### Train XMatch + Flexmatch
+### Train SEAL + Flexmatch
 Train the model by 40 labeled data of STL-10 dataset:
 
 ```
