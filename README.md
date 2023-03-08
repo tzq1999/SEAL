@@ -1,5 +1,5 @@
 # General Description
-- This is a PyTorch implementation of the paper "SEAL: Simultaneous Label Hierarchy Exploration And Learning". We provide the code for CIFAR10, CIFAR100 and STL-10. Other settings are coming soon.
+- This is a PyTorch implementation of the paper "SEAL: Simultaneous Label Hierarchy Exploration And Learning". We provide the code for CIFAR10, CIFAR100 and STL-10. 
 
 
 ## Experiments on CIFAR10 Dataset
