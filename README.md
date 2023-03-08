@@ -1,5 +1,5 @@
 # General Description
-- This is a PyTorch implementation of the paper "XMatch: Simultaneous Label Hierarchy Exploration And Semi-supervised Learning". We provide the code for CIFAR10, CIFAR100 and STL-10. Other settings are coming soon.
+- This is a PyTorch implementation of the paper "SEAL: Simultaneous Label Hierarchy Exploration And Learning". We provide the code for CIFAR10, CIFAR100 and STL-10. Other settings are coming soon.
 
 
 ## Experiments on CIFAR10 Dataset
@@ -13,7 +13,7 @@
 - tqdm
 - apex (optional)
 
-### Train SEAL + DebiasPL
+### Train SEAL (Debiased)
 Train the model by 40 labeled data of CIFAR10 dataset:
 
 ```
@@ -27,7 +27,7 @@ python train.py --dataset cifar10 --num-labeled 40 --arch wideresnet --batch-siz
 
 Please see `CIFAR100/environment.yml`.
 
-### Train SEAL + Fixmatch
+### Train SEAL
 Train the model by 400 labeled data of CIFAR100 dataset:
 
 ```
@@ -36,7 +36,7 @@ python fixmatch.py --c config/fixmatch/fixmatch_cifar100_400_0.yaml
 python fixmatch.py --c config/fixmatch/fixmatch_cifar100_2500_0.yaml
 ```
 
-### Train SEAL + Flexmatch
+### Train SEAL (Curriculum)
 Train the model by 400 labeled data of CIFAR100 dataset:
 
 ```
@@ -51,7 +51,7 @@ python flexmatch.py --c config/flexmatch/flexmatch_cifar100_2500_0.yaml
 
 Please see `STL-10/environment.yml`.
 
-### Train SEAL + Fixmatch
+### Train SEAL 
 Train the model by 40 labeled data of STL-10 dataset:
 
 ```
@@ -60,7 +60,7 @@ python fixmatch.py --c config/fixmatch/fixmatch_stl10_40_0.yaml
 python fixmatch.py --c config/fixmatch/fixmatch_stl10_250_0.yaml
 ```
 
-### Train SEAL + Flexmatch
+### Train SEAL (Curriculum)
 Train the model by 40 labeled data of STL-10 dataset:
 
 ```
